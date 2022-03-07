@@ -13,18 +13,47 @@ import {
   StyleSheet,
 } from 'react-native'; 
 import Home from './screens/Home';
-import Details from './screens/Details';
+import DetailsModal from './screens/DetailsModal';
 import { createStackNavigator } from '@react-navigation/stack';
-const Stack = createStackNavigator();
-const App = () => {
-   
+import Counter from './components/Counter';
+const MainStack = createStackNavigator();
+const RootStack = createStackNavigator();
+
+const MainStackScreen = () => {
   return (
-    <NavigationContainer >
-    <Stack.Navigator>
-    <Stack.Screen name="Home" component={Home} />
-    <Stack.Screen name="Details" component={Details} />
-  </Stack.Navigator>
+    <MainStack.Navigator>
+      <MainStack.Screen name="Home" component={Home} />
+      <MainStack.Screen
+        name="Counter"
+        component={Counter}
+        // options={({ route }) => ({ title: route.params.paletteName })}
+      />
+      <MainStack.Screen
+        name="DetailsModal"
+        component={DetailsModal}
+        // options={({ route }) => ({ title: route.params.paletteName })}
+      />
+    </MainStack.Navigator>
+  );
+};
+const App = () => {
+  return (
+  <NavigationContainer >
+     <RootStack.Navigator mode="modal">
+        <RootStack.Screen
+          name="Main"
+          component={MainStackScreen}
+          options={{ headerShown: false }}
+        />
+      </RootStack.Navigator>
+      <RootStack.Screen
+          name="DetailsModal"
+          component={DetailsModal}
+          options={{ headerShown: false }}
+        />
+      
     </NavigationContainer>
+   
   
   );
 };
